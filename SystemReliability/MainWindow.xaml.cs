@@ -1,7 +1,7 @@
 ﻿namespace SystemReliability
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// longeraction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {

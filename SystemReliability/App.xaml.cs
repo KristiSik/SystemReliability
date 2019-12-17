@@ -9,7 +9,7 @@ using System.Windows;
 namespace SystemReliability
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// longeraction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {

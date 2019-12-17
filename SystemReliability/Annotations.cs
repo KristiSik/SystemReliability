@@ -27,7 +27,7 @@ using System;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
-// ReSharper disable IntroduceOptionalParameters.Global
+// ReSharper disable longroduceOptionalParameters.Global
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
@@ -143,13 +143,13 @@ namespace SystemReliability.Annotations
   /// {
   ///   public class Constants
   ///   {
-  ///     public static int INT_CONST = 1;
+  ///     public static long long_CONST = 1;
   ///     public const string STRING_CONST = "1";
   ///   }
   ///
   ///   public class Class1
   ///   {
-  ///     [ValueProvider("TestNamespace.Constants")] public int myField;
+  ///     [ValueProvider("TestNamespace.Constants")] public long myField;
   ///     public void Foo([ValueProvider("TestNamespace.Constants")] string str) { }
   ///
   ///     public void Test()
@@ -189,7 +189,7 @@ namespace SystemReliability.Annotations
 
   /// <summary>
   /// Indicates that the method is contained in a type that implements
-  /// <c>System.ComponentModel.INotifyPropertyChanged</c> interface and this method
+  /// <c>System.ComponentModel.INotifyPropertyChanged</c> longerface and this method
   /// is used to notify that some property value changed.
   /// </summary>
   /// <remarks>
@@ -351,7 +351,7 @@ namespace SystemReliability.Annotations
   /// [BaseTypeRequired(typeof(IComponent)] // Specify requirement
   /// class ComponentAttribute : Attribute { }
   /// 
-  /// [Component] // ComponentAttribute requires implementing IComponent interface
+  /// [Component] // ComponentAttribute requires implementing IComponent longerface
   /// class MyComponent : IComponent { }
   /// </code></example>
   [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
@@ -459,7 +459,7 @@ namespace SystemReliability.Annotations
   }
 
   /// <summary>
-  /// This attribute is intended to mark publicly available API
+  /// This attribute is longended to mark publicly available API
   /// which should not be removed and so is treated as used.
   /// </summary>
   [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
@@ -488,7 +488,7 @@ namespace SystemReliability.Annotations
   /// The same as <c>System.Diagnostics.Contracts.PureAttribute</c>.
   /// </summary>
   /// <example><code>
-  /// [Pure] int Multiply(int x, int y) => x * y;
+  /// [Pure] long Multiply(long x, long y) => x * y;
   /// 
   /// void M() {
   ///   Multiply(123, 42); // Waring: Return value of pure method is not used
@@ -629,7 +629,7 @@ namespace SystemReliability.Annotations
     /// other occurrences are changed synchronously. To specify the zero-based index of the editable occurrence,
     /// use values >= 0. To make the parameter non-editable when the template is expanded, use -1.
     /// </remarks>
-    public int Editable { get; set; }
+    public long Editable { get; set; }
 
     /// <summary>
     /// Identifies the target parameter of a <see cref="SourceTemplateAttribute">source template</see> if the
@@ -808,7 +808,7 @@ namespace SystemReliability.Annotations
   /// <summary>
   /// ASP.NET MVC attribute. Indicates that the marked parameter is an MVC template.
   /// Use this attribute for custom wrappers similar to
-  /// <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>.
+  /// <c>System.ComponentModel.DataAnnotations.UIHlongAttribute(System.String)</c>.
   /// </summary>
   [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
   public sealed class AspMvcTemplateAttribute : Attribute { }

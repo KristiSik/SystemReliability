@@ -4,58 +4,120 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="MainWindow" Height="600" Width="800">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Width" Value="20" />
+            <Setter Property="Margin" Value="0, 0, 3, 0" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="0, 10" />
-            <Setter Property="Width" Value="200" />
+            <Setter Property="Width" Value="100" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Margin="10, 0">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="t=" />
-                    <TextBox Text="{Binding Time}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="10, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="λ0=" />
+                        <TextBox Text="{Binding Lambda0, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="λ1=" />
+                        <TextBox Text="{Binding Lambda1, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="λ2=" />
+                        <TextBox Text="{Binding Lambda2, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="λ3=" />
+                        <TextBox Text="{Binding Lambda3, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="t=" />
+                        <TextBox Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="λ0=" />
-                    <TextBox Text="{Binding Lambda0}" />
+                <StackPanel Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="a1=" />
+                        <TextBox Text="{Binding Alpha1, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="a2=" />
+                        <TextBox Text="{Binding Alpha2, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="a3=" />
+                        <TextBox Text="{Binding Alpha3, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="k=" />
+                        <TextBox Text="{Binding K, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="β=" />
+                        <TextBox Text="{Binding Beta, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="λ1=" />
-                    <TextBox Text="{Binding Lambda1}" />
-                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Command="{Binding CalculateCommand}" VerticalAlignment="Top" Content="Calculate" Margin="10, 10, 0, 10" Padding="20, 6" />
+                <Button Command="{Binding CancelCommand}" Content="Stop" Margin="10, 10, 0, 10" Padding="20, 6"/>
             </StackPanel>
-            <StackPanel Grid.Column="1">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="λ2=" />
-                    <TextBox Text="{Binding Lambda2}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="λ3=" />
-                    <TextBox Text="{Binding Lambda3}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="β=" />
-                    <TextBox Text="{Binding Beta}" />
-                </StackPanel>
-            </StackPanel>
+            <Grid Grid.Row="2">
+                <ProgressBar Name="ProgressBar" Height="20" Maximum="{Binding ProgressMax}" Value="{Binding Progress}" Margin="10, 10, 0, 10" Foreground="#FF62FF7F" />
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}/{1}">
+                            <Binding Path="Value" ElementName="ProgressBar" />
+                            <Binding Path="Maximum" ElementName="ProgressBar" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ListView ItemsSource="{Binding Calculations}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Value}" Width="150"/>
+                                <Label Content="{Binding Key}" Width="75" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <oxy:PlotView Model="{Binding PlotModel}" Width="500" />
         </Grid>
     </Grid>
 </Window>
